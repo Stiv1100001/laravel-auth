@@ -20,3 +20,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('posts')->name('posts.')->middleware('auth')->group(function () {
+    Route::get('/', 'PostController@index')->name('index');
+    Route::get('/{id}', 'PostController@show')->name('show');
+});
+
+
+Route::get('/{any}', function () {
+    return view('welcome');
+})->where('any', '.*');
